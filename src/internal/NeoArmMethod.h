@@ -101,7 +101,7 @@ public:
         return _sizeData;
     };
 
-    void applySettings(const SettingsObject& settings)
+    void applySettings([[maybe_unused]] const SettingsObject& settings)
     {
     }
 
@@ -849,6 +849,7 @@ typedef NeoArmTm1814InvertedMethod NeoArmTm1914InvertedMethod;
 typedef NeoArmWs2812xMethod NeoWs2813Method;
 typedef NeoArmWs2812xMethod NeoWs2812xMethod;
 typedef NeoArmWs2812xMethod NeoWs2811Method;
+typedef NeoArmWs2812xMethod NeoWs2816Method;
 typedef NeoArmSk6812Method NeoSk6812Method;
 typedef NeoArmSk6812Method NeoLc8812Method;
 typedef NeoArm800KbpsMethod NeoWs2812Method;

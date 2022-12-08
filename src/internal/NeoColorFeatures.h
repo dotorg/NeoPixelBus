@@ -279,16 +279,16 @@ public:
     typedef NeoNoSettings SettingsObject;
     static const size_t SettingsSize = 0;
 
-    static void applySettings(uint8_t*, const SettingsObject&)
+    static void applySettings([[maybe_unused]] uint8_t* pData, [[maybe_unused]] size_t sizeData, [[maybe_unused]] const SettingsObject& settings)
     {
     }
 
-    static uint8_t* pixels(uint8_t* pData)
+    static uint8_t* pixels([[maybe_unused]] uint8_t* pData, [[maybe_unused]] size_t sizeData)
     {
         return pData;
     }
 
-    static const uint8_t* pixels(const uint8_t* pData)
+    static const uint8_t* pixels([[maybe_unused]] const uint8_t* pData, [[maybe_unused]] size_t sizeData)
     {
         return pData;
     }
@@ -300,16 +300,16 @@ public:
     typedef NeoNoSettings SettingsObject;
     static const size_t SettingsSize = 0;
 
-    static void applySettings(uint8_t*, const SettingsObject&)
+    static void applySettings([[maybe_unused]] uint8_t* pData, [[maybe_unused]] size_t sizeData, [[maybe_unused]] const SettingsObject& settings)
     {
     }
 
-    static uint8_t* pixels(uint8_t* pData)
+    static uint8_t* pixels([[maybe_unused]] uint8_t* pData, [[maybe_unused]] size_t sizeData)
     {
         return pData;
     }
 
-    static const uint8_t* pixels(const uint8_t* pData)
+    static const uint8_t* pixels([[maybe_unused]] const uint8_t* pData, [[maybe_unused]] size_t sizeData)
     {
         return pData;
     }
@@ -321,16 +321,16 @@ public:
     typedef NeoNoSettings SettingsObject;
     static const size_t SettingsSize = 0;
 
-    static void applySettings(uint8_t*, const SettingsObject&)
+    static void applySettings([[maybe_unused]] uint8_t* pData, [[maybe_unused]] size_t sizeData, [[maybe_unused]] const SettingsObject& settings)
     {
     }
 
-    static uint8_t* pixels(uint8_t* pData)
+    static uint8_t* pixels([[maybe_unused]] uint8_t* pData, [[maybe_unused]] size_t sizeData)
     {
         return pData;
     }
 
-    static const uint8_t* pixels(const uint8_t* pData)
+    static const uint8_t* pixels([[maybe_unused]] const uint8_t* pData, [[maybe_unused]] size_t sizeData)
     {
         return pData;
     }
@@ -342,16 +342,16 @@ public:
     typedef NeoNoSettings SettingsObject;
     static const size_t SettingsSize = 0;
 
-    static void applySettings(uint8_t*, const SettingsObject&)
+    static void applySettings([[maybe_unused]] uint8_t* pData, [[maybe_unused]] size_t sizeData, [[maybe_unused]] const SettingsObject& settings)
     {
     }
 
-    static uint8_t* pixels(uint8_t* pData)
+    static uint8_t* pixels([[maybe_unused]] uint8_t* pData, [[maybe_unused]] size_t sizeData)
     {
         return pData;
     }
 
-    static const uint8_t* pixels(const uint8_t* pData)
+    static const uint8_t* pixels([[maybe_unused]] const uint8_t* pData, [[maybe_unused]] size_t sizeData)
     {
         return pData;
     }
@@ -711,3 +711,44 @@ public:
 
 typedef NeoRgb48Feature NeoRgbUcs8903Feature;
 typedef NeoRgbw64Feature NeoRgbwUcs8904Feature;
+
+
+
+class NeoGrb48Feature : public Neo6ByteElementsNoSettings
+{
+public:
+    static void applyPixelColor(uint8_t* pPixels, uint16_t indexPixel, ColorObject color)
+    {
+        uint16_t* p = reinterpret_cast<uint16_t*>(getPixelAddress(pPixels, indexPixel));
+
+        *p++ = color.G;
+        *p++ = color.R;
+        *p = color.B;
+    }
+
+    static ColorObject retrievePixelColor(const uint8_t* pPixels, uint16_t indexPixel)
+    {
+        ColorObject color;
+        const uint16_t* p = reinterpret_cast<const uint16_t*>(getPixelAddress(pPixels, indexPixel));
+
+        color.G = *p++;
+        color.R = *p++;
+        color.B = *p;
+
+        return color;
+    }
+
+    static ColorObject retrievePixelColor_P(PGM_VOID_P pPixels, uint16_t indexPixel)
+    {
+        ColorObject color;
+        const uint16_t* p = reinterpret_cast<const uint16_t*>(getPixelAddress(reinterpret_cast<const uint8_t*>(pPixels), indexPixel));
+
+        color.G = pgm_read_word(p++);
+        color.R = pgm_read_word(p++);
+        color.B = pgm_read_word(p);
+
+        return color;
+    }
+};
+
+typedef NeoGrb48Feature NeoGrbWs2816Feature;
